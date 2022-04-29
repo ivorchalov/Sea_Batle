@@ -9,28 +9,27 @@ import java.util.ArrayList;
 
 public class Main extends Application {
 
-//    static ArrayList<Ship> ships = new ArrayList<>();
-
     public static int[][] allyField = new int[12][12];
     public static int[][] enemyField = new int[12][12];
 
-    private static ArrayList<Cell> allyCellList = new ArrayList<>();
-    private static ArrayList<Cell> enemyCellList = new ArrayList<>();
+    public static ArrayList<Cell> allyCellList = new ArrayList<>();
+    public static ArrayList<Cell> enemyCellList = new ArrayList<>();
+
+    public static Group group = new Group();
 
     public static void main(String[] args){
 
         Application.launch(args);
 
-        System.out.println(allyCellList.get(0).getLine());
-        System.out.println(allyCellList.get(0).getColumn());
-        System.out.println(allyCellList.get(99).getLine());
-        System.out.println(allyCellList.get(99).getColumn());
+        System.out.println(allyCellList.get(0).getI());
+        System.out.println(allyCellList.get(0).getJ());
+        System.out.println(allyCellList.get(99).getI());
+        System.out.println(allyCellList.get(99).getJ());
     }
 
     @Override
     public void start(Stage primaryStage){
 
-        Group group = new Group();
         Scene scene = new Scene(group, 1280, 720);
         primaryStage.setTitle("Sea battle");
         primaryStage.setScene(scene);
@@ -50,9 +49,11 @@ public class Main extends Application {
        for(int i = 1; i < allyField.length - 1; i++){
            for(int j = 1; j < allyField.length - 1; j++){
                Cell cell = new Cell();
-               cell.drawCell(x,y, group, true);
-               cell.setLine(i);
-               cell.setColumn(j);
+               cell.drawCell(group, x,y, true);
+               cell.setI(i);
+               cell.setJ(j);
+               cell.setX(x);
+               cell.setY(y);
                cell.setCurrentMatrixValue(allyField[i][j]);
                allyCellList.add(cell);
                x += 50;
@@ -67,9 +68,11 @@ public class Main extends Application {
        for(int i = 1; i < enemyField.length - 1; i++){
            for(int j = 1; j < enemyField.length - 1; j++){
                Cell cell = new Cell();
-               cell.drawCell(x,y, group, false);
-               cell.setLine(i);
-               cell.setColumn(j);
+               cell.drawCell(group, x,y, false);
+               cell.setI(i);
+               cell.setJ(j);
+               cell.setX(x);
+               cell.setY(y);
                cell.setCurrentMatrixValue(enemyField[i][j]);
                enemyCellList.add(cell);
                x += 50;

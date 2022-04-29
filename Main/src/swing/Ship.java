@@ -35,13 +35,11 @@ class Ship{
     public int getCountOfTypesOfShips(){
         return countOfTypesOfShips;
     }
-
+    public void setCountOfTypesOfShips(int countOfTypesOfShips) {
+        Ship.countOfTypesOfShips = countOfTypesOfShips;
+    }
     public ArrayList<Ship> getShips(){
         return ships;
-    }
-
-    public static void setCountOfTypesOfShips(int countOfTypesOfShips) {
-        Ship.countOfTypesOfShips = countOfTypesOfShips;
     }
 
     public void hitShip(){
@@ -58,32 +56,36 @@ class Ship{
     }
 
     public void createShips(){
-
+        Ship antiBugShip = new Ship(0,0);
         Ship fourDeckShip = new Ship(4,1);
         Ship threeDeckShip = new Ship(3,2);
         Ship doubleDeckShip = new Ship(2,3);
         Ship singleDeckShip = new Ship(1,4);
 
+        ships.add(antiBugShip);
         ships.add(fourDeckShip);
         ships.add(threeDeckShip);
         ships.add(doubleDeckShip);
         ships.add(singleDeckShip);
     }
 
-    public void setShip(int startX, int startY){
-        Main main = new Main();
+    public void setShip(int i, int j){
 
-        for(int i = 0; i < health; i++){
+        Cell cell = new Cell();
+
+        for(int index = 0; index < health; index++){
             if(vertical){
-                main.allyField[startX + i][startY] = 1;
+                Main.allyField[i + index][j] = 1;
+                cell.updateCell(Main.group,Main.allyCellList.get((i+index-1)*10+j-1).getX(), Main.allyCellList.get((i+index-1)*10+j-1).getY());
             } else {
-                main.allyField[startX][startY + i] = 1;
+                Main.allyField[i][j + index] = 1;
+                cell.updateCell(Main.group, Main.allyCellList.get((i-1)*10+j+index-1).getX(), Main.allyCellList.get((i-1)*10+j+index-1).getY());
             }
         }
 
-        for(int i = 1; i < main.allyField.length - 1; i++){
-            for(int j = 1; j < main.allyField.length - 1; j++){
-                System.out.print(main.allyField[i][j] + " ");
+        for(int index1 = 1; index1 < Main.allyField.length - 1; index1++){
+            for(int index2 = 1; index2 < Main.allyField.length - 1; index2++){
+                System.out.print(Main.allyField[index1][index2] + " ");
             }
             System.out.println();
         }
