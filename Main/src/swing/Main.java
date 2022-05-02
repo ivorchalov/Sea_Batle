@@ -16,21 +16,32 @@ public class Main extends Application {
     public static ArrayList<Cell> enemyCellList = new ArrayList<>();
 
     public static Group group = new Group();
+    public static Scene scene = new Scene(group, 1280, 960);
 
     public static void main(String[] args){ Application.launch(args); }
 
     @Override
     public void start(Stage primaryStage){
 
-        Scene scene = new Scene(group, 1280, 720);
         primaryStage.setTitle("Sea battle");
         primaryStage.setScene(scene);
         primaryStage.show();
 
         drawFields(group);
+        drawShips(group);
 
-        Ship rotate = new Ship(0, 0);
-        rotate.rotate(scene);
+        SingleDeckShip singleDeckShip = new SingleDeckShip(1, 4);
+        DoubleDeckShip doubleDeckShip = new DoubleDeckShip(2, 3);
+        ThreeDeckShip threeDeckShip = new ThreeDeckShip(3, 2);
+        FourDeckShip fourDeckShip = new FourDeckShip(4, 1);
+
+        singleDeckShip.rotate(scene);
+        doubleDeckShip.rotate(scene);
+        threeDeckShip.rotate(scene);
+        fourDeckShip.rotate(scene);
+
+//        Ship rotate = new Ship(0, 0);
+//        rotate.rotate(scene);
    }
 
    public static void drawFields(Group group){
@@ -72,6 +83,29 @@ public class Main extends Application {
            x = 700;
            y += 50;
        }
+   }
+
+   public void drawShips(Group group){
+        int x = 100;
+        int y = 900;
+
+        SingleDeckShip singleDeckShip = new SingleDeckShip(1 , 4);
+        singleDeckShip.draw(group, x, y);
+
+        y -= 100;
+
+        DoubleDeckShip doubleDeckShip = new DoubleDeckShip(2,3);
+        doubleDeckShip.draw(group, x, y);
+
+        y -= 100;
+
+        ThreeDeckShip threeDeckShip = new ThreeDeckShip(3, 2);
+        threeDeckShip.draw(group, x, y);
+
+        y -= 100;
+
+        FourDeckShip fourDeckShip = new FourDeckShip(4, 1);
+        fourDeckShip.draw(group, x, y);
    }
 }
 

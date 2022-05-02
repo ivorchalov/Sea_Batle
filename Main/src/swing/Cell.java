@@ -72,34 +72,9 @@ class Cell{
     private void MouseClickedOnCell(Rectangle rectangle, boolean ally){
         rectangle.setOnMouseClicked(event -> {
             if(ally){
-                hitCell = true;
-                Ship count = new Ship();
 
-                if(count.getCountOfTypes() < 5){
-                    if(count.getShips().get(count.getCountOfTypes()).getCount() == 0){
-                        count.setCountOfTypes(count.getCountOfTypes() + 1);
-                        System.out.println("Количество типов кораблей: " + count.getCountOfTypes());
-                    }
-                    if(count.getShips().get(count.getCountOfTypes()).getCount() > 0){
-                        // Уменьшаем количество кораблей одного типа, которые нужно выставить на поле
-                        count.getShips().get(count.getCountOfTypes()).setCount(
-                                count.getShips().get(count.getCountOfTypes()).getCount() - 1
-                        );
-                        Ship ship = new Ship(
-                                count.getShips().get(count.getCountOfTypes()).getHealth(),
-                                count.getShips().get(count.getCountOfTypes()).getCount()
-                        );
-
-                        System.out.println("Количество кораблей одного типа, которые нужно ещё выставить на поле: " + count.getShips().get(count.getCountOfTypes()).getCount());
-                        ship.setShip(i, j);
-                    }
-                }
             } else {
-                hitCell = true;
-                rectangle.setFill(Color.RED);
-                if(currentMatrixValue == 1){
-                    rectangle.setFill(Color.BLUE);
-                }
+
             }
         });
     }

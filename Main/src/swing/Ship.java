@@ -1,25 +1,30 @@
 package swing;
 
+import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 
-class Ship{
+abstract class Ship{
     private int health;
     private int count;
-    private static int countOfTypes = 0;
-    private static boolean vertical = true;
+    //private static int countOfTypes = 0;
+    private static boolean vertical = false;
     static ArrayList<Ship> ships = new ArrayList<>();
 
     Ship(int health, int count){
         this.health = health;
         this.count = count;
     }
-    Ship(){
-        createShips();
-    }
+//    Ship(){
+//        createShips();
+//    }
 
     public int getHealth(){
         return health;
@@ -32,19 +37,37 @@ class Ship{
         this.count = count;
     }
 
-    public int getCountOfTypes(){
-        return countOfTypes;
-    }
-    public void setCountOfTypes(int countOfTypes) {
-        Ship.countOfTypes = countOfTypes;
-    }
+//    public int getCountOfTypes(){
+//        return countOfTypes;
+//    }
+//    public void setCountOfTypes(int countOfTypes) {
+//        Ship.countOfTypes = countOfTypes;
+//    }
 
-    public ArrayList<Ship> getShips(){
-        return ships;
-    }
+//    public ArrayList<Ship> getShips(){
+//        return ships;
+//    }
 
     public void hitShip(){
         health--;
+    }
+
+    public void draw(Group group, int x, int y){
+        int a = 1;
+        int b = 1;
+        if (vertical){
+            b = health;
+        } else {
+            a = health;
+        }
+        for(int i = 0; i < count; i++){
+            Rectangle rectangle = new Rectangle(x, y, a * 50,  b *50);
+            rectangle.setFill(Color.BLUE);
+            rectangle.setStroke(Color.BLACK);
+            group.getChildren().add(rectangle);
+            MouseDragged(rectangle);
+            x += 100 + 50 * (health-1);
+        }
     }
 
     public void rotate(Scene scene){
@@ -56,19 +79,31 @@ class Ship{
         });
     }
 
-    public void createShips(){
-        Ship antiBugShip = new Ship(0,0);
-        Ship fourDeckShip = new Ship(4,1);
-        Ship threeDeckShip = new Ship(3,2);
-        Ship doubleDeckShip = new Ship(2,3);
-        Ship singleDeckShip = new Ship(1,4);
-
-        ships.add(antiBugShip);
-        ships.add(fourDeckShip);
-        ships.add(threeDeckShip);
-        ships.add(doubleDeckShip);
-        ships.add(singleDeckShip);
+    public void MouseDragged(Rectangle rectangle){
+        rectangle.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                rectangle.setX(mouseEvent.getX()-25);
+                rectangle.setY(mouseEvent.getY()-25);
+            }
+        });
     }
+
+
+
+//    public void createShips(){
+//        Ship antiBugShip = new Ship(0,0);
+//        Ship fourDeckShip = new Ship(4,1);
+//        Ship threeDeckShip = new Ship(3,2);
+//        Ship doubleDeckShip = new Ship(2,3);
+//        Ship singleDeckShip = new Ship(1,4);
+//
+//        ships.add(antiBugShip);
+//        ships.add(fourDeckShip);
+//        ships.add(threeDeckShip);
+//        ships.add(doubleDeckShip);
+//        ships.add(singleDeckShip);
+//    }
 
     public void setShip(int i, int j){
 
