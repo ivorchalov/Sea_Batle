@@ -50,7 +50,7 @@ class Cell{
 
     public boolean isHitCell() { return hitCell; }
 
-    public void updateCell(Group group, int x, int y){
+    public void update(Group group, int x, int y){
         Rectangle rectangle = new Rectangle();
         rectangle.setFill(Color.DARKGREY);
         rectangle.setStroke(Color.BLACK);
@@ -75,22 +75,22 @@ class Cell{
                 hitCell = true;
                 Ship count = new Ship();
 
-                if(count.getCountOfTypesOfShips() < 5){
-                    if(count.getShips().get(count.getCountOfTypesOfShips()).getCountOfShips() == 0){
-                        count.setCountOfTypesOfShips(count.getCountOfTypesOfShips() + 1);
-                        System.out.println("Количество типов кораблей: " + count.getCountOfTypesOfShips());
+                if(count.getCountOfTypes() < 5){
+                    if(count.getShips().get(count.getCountOfTypes()).getCount() == 0){
+                        count.setCountOfTypes(count.getCountOfTypes() + 1);
+                        System.out.println("Количество типов кораблей: " + count.getCountOfTypes());
                     }
-                    if(count.getShips().get(count.getCountOfTypesOfShips()).getCountOfShips() > 0){
+                    if(count.getShips().get(count.getCountOfTypes()).getCount() > 0){
                         // Уменьшаем количество кораблей одного типа, которые нужно выставить на поле
-                        count.getShips().get(count.getCountOfTypesOfShips()).setCountOfShips(
-                                count.getShips().get(count.getCountOfTypesOfShips()).getCountOfShips() - 1
+                        count.getShips().get(count.getCountOfTypes()).setCount(
+                                count.getShips().get(count.getCountOfTypes()).getCount() - 1
                         );
                         Ship ship = new Ship(
-                                count.getShips().get(count.getCountOfTypesOfShips()).getHealth(),
-                                count.getShips().get(count.getCountOfTypesOfShips()).getCountOfShips()
+                                count.getShips().get(count.getCountOfTypes()).getHealth(),
+                                count.getShips().get(count.getCountOfTypes()).getCount()
                         );
 
-                        System.out.println("Количество кораблей одного типа, которые нужно ещё выставить на поле: " + count.getShips().get(count.getCountOfTypesOfShips()).getCountOfShips());
+                        System.out.println("Количество кораблей одного типа, которые нужно ещё выставить на поле: " + count.getShips().get(count.getCountOfTypes()).getCount());
                         ship.setShip(i, j);
                     }
                 }

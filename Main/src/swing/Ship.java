@@ -8,14 +8,14 @@ import java.util.ArrayList;
 
 class Ship{
     private int health;
-    private int countOfShips;
-    private static int countOfTypesOfShips = 0;
+    private int count;
+    private static int countOfTypes = 0;
     private static boolean vertical = true;
     static ArrayList<Ship> ships = new ArrayList<>();
 
-    Ship(int health, int countOfShips){
+    Ship(int health, int count){
         this.health = health;
-        this.countOfShips = countOfShips;
+        this.count = count;
     }
     Ship(){
         createShips();
@@ -25,19 +25,20 @@ class Ship{
         return health;
     }
 
-    public int getCountOfShips(){
-        return countOfShips;
+    public int getCount(){
+        return count;
     }
-    public void setCountOfShips(int countOfShips){
-        this.countOfShips = countOfShips;
+    public void setCount(int count){
+        this.count = count;
     }
 
-    public int getCountOfTypesOfShips(){
-        return countOfTypesOfShips;
+    public int getCountOfTypes(){
+        return countOfTypes;
     }
-    public void setCountOfTypesOfShips(int countOfTypesOfShips) {
-        Ship.countOfTypesOfShips = countOfTypesOfShips;
+    public void setCountOfTypes(int countOfTypes) {
+        Ship.countOfTypes = countOfTypes;
     }
+
     public ArrayList<Ship> getShips(){
         return ships;
     }
@@ -46,7 +47,7 @@ class Ship{
         health--;
     }
 
-    public void rotateShip(Scene scene){
+    public void rotate(Scene scene){
         scene.addEventFilter(KeyEvent.KEY_PRESSED, event->{
             if (event.getCode() == KeyCode.SPACE) {
                 vertical = !vertical;
@@ -76,10 +77,14 @@ class Ship{
         for(int index = 0; index < health; index++){
             if(vertical){
                 Main.allyField[i + index][j] = 1;
-                cell.updateCell(Main.group,Main.allyCellList.get((i+index-1)*10+j-1).getX(), Main.allyCellList.get((i+index-1)*10+j-1).getY());
+                int x = Main.allyCellList.get((i+index-1)*10+j-1).getX();
+                int y = Main.allyCellList.get((i+index-1)*10+j-1).getY();
+                cell.update(Main.group, x, y);
             } else {
                 Main.allyField[i][j + index] = 1;
-                cell.updateCell(Main.group, Main.allyCellList.get((i-1)*10+j+index-1).getX(), Main.allyCellList.get((i-1)*10+j+index-1).getY());
+                int x = Main.allyCellList.get((i-1)*10+j+index-1).getX();
+                int y = Main.allyCellList.get((i-1)*10+j+index-1).getY();
+                cell.update(Main.group, x, y);
             }
         }
 
@@ -91,3 +96,43 @@ class Ship{
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

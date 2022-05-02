@@ -17,15 +17,7 @@ public class Main extends Application {
 
     public static Group group = new Group();
 
-    public static void main(String[] args){
-
-        Application.launch(args);
-
-        System.out.println(allyCellList.get(0).getI());
-        System.out.println(allyCellList.get(0).getJ());
-        System.out.println(allyCellList.get(99).getI());
-        System.out.println(allyCellList.get(99).getJ());
-    }
+    public static void main(String[] args){ Application.launch(args); }
 
     @Override
     public void start(Stage primaryStage){
@@ -38,7 +30,7 @@ public class Main extends Application {
         drawFields(group);
 
         Ship rotate = new Ship(0, 0);
-        rotate.rotateShip(scene);
+        rotate.rotate(scene);
    }
 
    public static void drawFields(Group group){
