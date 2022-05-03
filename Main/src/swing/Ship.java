@@ -3,28 +3,31 @@ package swing;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
 
 import java.util.ArrayList;
 
-abstract class Ship{
+class Ship{
+
     private int health;
     private int count;
-    //private static int countOfTypes = 0;
-    private static boolean vertical = false;
-    static ArrayList<Ship> ships = new ArrayList<>();
+    static int countOfTypes = 0;
+    static int countOfShips = 10;
+    boolean isSetOnField = false;
 
     Ship(int health, int count){
         this.health = health;
         this.count = count;
     }
-//    Ship(){
-//        createShips();
-//    }
+
+    Ship(){
+        System.out.println("Ok");
+    }
+
+    private boolean vertical = false;
 
     public int getHealth(){
         return health;
@@ -37,16 +40,12 @@ abstract class Ship{
         this.count = count;
     }
 
-//    public int getCountOfTypes(){
-//        return countOfTypes;
-//    }
-//    public void setCountOfTypes(int countOfTypes) {
-//        Ship.countOfTypes = countOfTypes;
-//    }
-
-//    public ArrayList<Ship> getShips(){
-//        return ships;
-//    }
+    public int getCountOfTypes(){
+        return countOfTypes;
+    }
+    public void setCountOfTypes(int countOfTypes) {
+        Ship.countOfTypes = countOfTypes;
+    }
 
     public void hitShip(){
         health--;
@@ -70,10 +69,19 @@ abstract class Ship{
         }
     }
 
-    public void rotate(Scene scene){
+    public void rotate(Scene scene, Rectangle rectangle){
         scene.addEventFilter(KeyEvent.KEY_PRESSED, event->{
             if (event.getCode() == KeyCode.SPACE) {
+                Rotate rotate = new Rotate();
+                if (vertical){
+                    rotate.setAngle(-90);
+                } else {
+                    rotate.setAngle(90);
+                }
                 vertical = !vertical;
+                rotate.setPivotX(rectangle.getX()+25);
+                rotate.setPivotY(rectangle.getY()+25);
+                rectangle.getTransforms().add(rotate);
                 System.out.println(vertical);
             }
         });
@@ -87,22 +95,39 @@ abstract class Ship{
                 rectangle.setY(mouseEvent.getY()-25);
             }
         });
+        rectangle.setOnDragDetected(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rotate(rectangle.getScene(), rectangle);
+                System.out.println("Detected");
+            }
+        });
+
+        rectangle.setOnDragOver(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+                System.out.println("Over");
+            }
+        });
+        rectangle.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+//                rotate(rectangle.getScene(), rectangle);
+
+            }
+        });
     }
 
-
-
-//    public void createShips(){
-//        Ship antiBugShip = new Ship(0,0);
-//        Ship fourDeckShip = new Ship(4,1);
-//        Ship threeDeckShip = new Ship(3,2);
-//        Ship doubleDeckShip = new Ship(2,3);
-//        Ship singleDeckShip = new Ship(1,4);
+//    public void create(){
+//        Ship battleship = new Ship(4,1);
+//        Ship cruiser = new Ship(3,2);
+//        Ship destroyer = new Ship(2,3);
+//        Ship sloop = new Ship(1,4);
 //
-//        ships.add(antiBugShip);
-//        ships.add(fourDeckShip);
-//        ships.add(threeDeckShip);
-//        ships.add(doubleDeckShip);
-//        ships.add(singleDeckShip);
+//        ships.add(battleship);
+//        ships.add(cruiser);
+//        ships.add(destroyer);
+//        ships.add(sloop);
 //    }
 
     public void setShip(int i, int j){

@@ -1,6 +1,9 @@
 package swing;
 
+import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -66,16 +69,51 @@ class Cell{
         rectangle.setFill(Color.WHITE);
         rectangle.setStroke(Color.BLACK);
         group.getChildren().add(rectangle);
-        MouseClickedOnCell(rectangle, ally);
+        mouseEvent(rectangle, ally);
     }
 
-    private void MouseClickedOnCell(Rectangle rectangle, boolean ally){
-        rectangle.setOnMouseClicked(event -> {
-            if(ally){
+    private void mouseEvent(Rectangle rectangle, boolean ally){
+        if(ally){
+            rectangle.setOnDragOver(new EventHandler<DragEvent>() {
+                @Override
+                public void handle(DragEvent event) {
+                    rectangle.setFill(Color.DARKGREY);
+                    hitCell = true;
+                    System.out.println("Ok");
+                }
+            });
+//            rectangle.setOnMouseReleased(new EventHandler<MouseEvent>() {
+//                @Override
+//                public void handle(MouseEvent event) {
+////
+////                    if(count.getCountOfTypes() < 5) {
+////                        if (Main.ships.get(count.getCountOfTypes()).getCount() == 0) {
+////                            count.setCountOfTypes(count.getCountOfTypes() + 1);
+////                            System.out.println("Количество типов кораблей: " + count.getCountOfTypes());
+////                        }
+////                        if (Main.ships.get(count.getCountOfTypes()).getCount() > 0) {
+////                            // Уменьшаем количество кораблей одного типа, которые нужно выставить на поле
+////                            Main.ships.get(count.getCountOfTypes()).setCount(
+////                                    Main.ships.get(count.getCountOfTypes()).getCount() - 1
+////                            );
+////                            Ship ship = new Ship(
+////                                    Main.ships.get(count.getCountOfTypes()).getHealth(),
+////                                    Main.ships.get(count.getCountOfTypes()).getCount()
+////                            );
+////
+////                            System.out.println("Количество кораблей одного типа, которые нужно ещё выставить на поле: " + Main.ships.get(count.getCountOfTypes()).getCount());
+////                            ship.setShip(i, j);
+////                        }
+////                    }
+//                }
+//            });
+        } else {
+            rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
 
-            } else {
-
-            }
-        });
+                }
+            });
+        }
     }
 }

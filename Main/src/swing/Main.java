@@ -14,6 +14,7 @@ public class Main extends Application {
 
     public static ArrayList<Cell> allyCellList = new ArrayList<>();
     public static ArrayList<Cell> enemyCellList = new ArrayList<>();
+    public static ArrayList<Ship> ships = new ArrayList<>();
 
     public static Group group = new Group();
     public static Scene scene = new Scene(group, 1280, 960);
@@ -29,19 +30,6 @@ public class Main extends Application {
 
         drawFields(group);
         drawShips(group);
-
-        SingleDeckShip singleDeckShip = new SingleDeckShip(1, 4);
-        DoubleDeckShip doubleDeckShip = new DoubleDeckShip(2, 3);
-        ThreeDeckShip threeDeckShip = new ThreeDeckShip(3, 2);
-        FourDeckShip fourDeckShip = new FourDeckShip(4, 1);
-
-        singleDeckShip.rotate(scene);
-        doubleDeckShip.rotate(scene);
-        threeDeckShip.rotate(scene);
-        fourDeckShip.rotate(scene);
-
-//        Ship rotate = new Ship(0, 0);
-//        rotate.rotate(scene);
    }
 
    public static void drawFields(Group group){
@@ -89,23 +77,27 @@ public class Main extends Application {
         int x = 100;
         int y = 900;
 
-        SingleDeckShip singleDeckShip = new SingleDeckShip(1 , 4);
-        singleDeckShip.draw(group, x, y);
+        Ship sloop = new Ship(1,4);
+        ships.add(sloop);
+        sloop.draw(group, x, y);
 
         y -= 100;
 
-        DoubleDeckShip doubleDeckShip = new DoubleDeckShip(2,3);
-        doubleDeckShip.draw(group, x, y);
+       Ship destroyer = new Ship(2,3);
+        ships.add(destroyer);
+        destroyer.draw(group, x, y);
 
         y -= 100;
 
-        ThreeDeckShip threeDeckShip = new ThreeDeckShip(3, 2);
-        threeDeckShip.draw(group, x, y);
+       Ship cruiser = new Ship(3,2);
+        ships.add(cruiser);
+        cruiser.draw(group, x, y);
 
         y -= 100;
 
-        FourDeckShip fourDeckShip = new FourDeckShip(4, 1);
-        fourDeckShip.draw(group, x, y);
+       Ship battleship = new Ship(4,1);
+        ships.add(battleship);
+        battleship.draw(group, x, y);
    }
 }
 
