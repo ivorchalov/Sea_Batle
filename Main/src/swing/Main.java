@@ -71,6 +71,55 @@ public class Main extends Application {
            x = 700;
            y += 50;
        }
+
+       int x1 = 60;
+       int x2 = 660;
+       int y1 = 102;
+       int y2 = 102;
+
+       for(char i = 'A'; i <= 'J'; i++){
+           Text text1 = new Text(Character.toString(i));
+           text1.setX(x1);
+           text1.setY(y1);
+           text1.setFont(Font.font(28));
+           group.getChildren().add(text1);
+           y1 += 50;
+
+           Text text2 = new Text(Character.toString(i));
+           text2.setX(x2);
+           text2.setY(y2);
+           text2.setFont(Font.font(28));
+           group.getChildren().add(text2);
+           y2 += 50;
+       }
+
+       x1 = 115;
+       x2 = 715;
+       y = 58;
+
+       for(int i = 1; i <= 10; i++){
+           Text text1 = new Text(Integer.toString(i));
+           text1.setX(x1);
+           text1.setY(y);
+           text1.setFont(Font.font(28));
+           group.getChildren().add(text1);
+           if(i == 9){
+               x1 += 45;
+           } else {
+               x1 += 50;
+           }
+
+           Text text2 = new Text(Integer.toString(i));
+           text2.setX(x2);
+           text2.setY(y);
+           text2.setFont(Font.font(28));
+           group.getChildren().add(text2);
+           if(i == 9){
+               x2 += 45;
+           } else {
+               x2 += 50;
+           }
+       }
    }
 
    public void drawShips(Group group){
