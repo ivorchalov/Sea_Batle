@@ -1,8 +1,5 @@
-package swing;
-
 import javafx.event.EventHandler;
 import javafx.scene.Group;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -53,9 +50,21 @@ class Cell{
 
     public boolean isHitCell() { return hitCell; }
 
+    public void setHitCell(boolean hitCell) {
+        this.hitCell = hitCell;
+    }
+
     public void update(Group group, int x, int y){
+        Enemy enemy = new Enemy();
         Rectangle rectangle = new Rectangle();
-        rectangle.setFill(Color.DARKGREY);
+        if (Main.allyField[i][j] == -1) {
+            rectangle.setFill(Color.RED);
+            enemy.hitField();
+        } else if (Main.allyField[i][j] == 0) {
+            rectangle.setFill(Color.BLUE);
+        } else {
+            rectangle.setFill(Color.DARKGREY);
+        }
         rectangle.setStroke(Color.BLACK);
         rectangle.setX(x);
         rectangle.setY(y);
@@ -74,46 +83,26 @@ class Cell{
 
     private void mouseEvent(Rectangle rectangle, boolean ally){
         if(ally){
-            rectangle.setOnDragOver(new EventHandler<DragEvent>() {
+            rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
-                public void handle(DragEvent event) {
-                    rectangle.setFill(Color.DARKGREY);
-                    hitCell = true;
-                    System.out.println("Ok");
+                public void handle(MouseEvent event) {
                 }
             });
-//            rectangle.setOnMouseReleased(new EventHandler<MouseEvent>() {
-//                @Override
-//                public void handle(MouseEvent event) {
-////
-////                    if(count.getCountOfTypes() < 5) {
-////                        if (Main.ships.get(count.getCountOfTypes()).getCount() == 0) {
-////                            count.setCountOfTypes(count.getCountOfTypes() + 1);
-////                            System.out.println("Количество типов кораблей: " + count.getCountOfTypes());
-////                        }
-////                        if (Main.ships.get(count.getCountOfTypes()).getCount() > 0) {
-////                            // Уменьшаем количество кораблей одного типа, которые нужно выставить на поле
-////                            Main.ships.get(count.getCountOfTypes()).setCount(
-////                                    Main.ships.get(count.getCountOfTypes()).getCount() - 1
-////                            );
-////                            Ship ship = new Ship(
-////                                    Main.ships.get(count.getCountOfTypes()).getHealth(),
-////                                    Main.ships.get(count.getCountOfTypes()).getCount()
-////                            );
-////
-////                            System.out.println("Количество кораблей одного типа, которые нужно ещё выставить на поле: " + Main.ships.get(count.getCountOfTypes()).getCount());
-////                            ship.setShip(i, j);
-////                        }
-////                    }
-//                }
-//            });
         } else {
             rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-
+                    Enemy enemy = new Enemy();
+                    if (Main.enemyField[i][j] == 1) {
+                        rectangle.setFill(Color.RED);
+                        return;
+                    } else {
+                        enemy.hitField();
+                        rectangle.setFill(Color.DARKGREY);
+                    }
                 }
             });
         }
     }
 }
+
