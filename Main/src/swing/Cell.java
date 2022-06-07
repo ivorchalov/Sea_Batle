@@ -59,7 +59,9 @@ class Cell{
         Rectangle rectangle = new Rectangle();
         if (Main.allyField[indI][indY] == -1) {
             rectangle.setFill(Color.RED);
-            enemy.hitField();
+            enemy.setIsNotRandom();
+            System.out.println("damaged " + i + " " + j);
+            enemy.hitField(i, j);
         } else if (Main.allyField[indI][indY] == 2) {
             rectangle.setFill(Color.BLUE);
         } else {
@@ -92,7 +94,7 @@ class Cell{
                     rectangle.setFill(Color.RED);
                     return;
                 } else {
-                    enemy.hitField();
+                    enemy.hitField(i, j);
                     rectangle.setFill(Color.DARKGREY);
                 }
             }

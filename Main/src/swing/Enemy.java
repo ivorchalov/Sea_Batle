@@ -3,60 +3,108 @@ import java.util.ArrayList;
 public class Enemy {
     static int n = 100;
     static String way = "";
+    private boolean isRandom = true;
 
-    void hitField(){
-        int index = (int)(Math.random() * n);
-        int x = Main.allyCellList.get(index).getX();
-        int y = Main.allyCellList.get(index).getY();
-        int i = Main.allyCellList.get(index).getI();
-        int j = Main.allyCellList.get(index).getJ();
-        Main.allyCellList.get(index).setHitCell(true);
-        Main.allyField[Main.allyCellList.get(index).getI()][Main.allyCellList.get(index).getJ()] -= 3;
-        Main.allyCellList.get(index).update(Main.group, x, y, i, j);
-        Main.allyCellList.remove(index);
-        n -= 1;
+    public void setIsNotRandom(){
+        isRandom = false;
     }
 
-//    void damagedShip(int i, int j){
-//       //вниз
-//       if(i + 1 <= 10  && !Main.allyCellList.get((i+1)*10+j).isHitCell() && (way == "" || way == "down")){
-//          if(Main.allyField[i+1][j] == 1){
-//             way = "down";
-//          } else {
-//             way = "";
-//          }
-//          Main.allyField[i+1][j] -= 2;
-//          Main.allyCellList.get((i+1)*10+j).update(Main.group, Main.allyCellList.get((i+1)*10+j).getX(), Main.allyCellList.get((i+1)*10+j).getY());
-//          Main.allyCellList.remove((i+1)*10+j);
-//       } else if (i - 1 >= 1 && !Main.allyCellList.get((i-1)*10+j).isHitCell() && (way == "" || way == "up")) {
-//          if(Main.allyField[i-1][j] == 1){
-//             way = "up";
-//          } else {
-//             way = "";
-//          }
-//          Main.allyField[i-1][j] -= 2;
-//          Main.allyCellList.get((i-1)*10+j).update(Main.group, Main.allyCellList.get((i-1)*10+j).getX(), Main.allyCellList.get((i-1)*10+j).getY());
-//          Main.allyCellList.remove((i-1)*10+j);
-//       } else if (j + 1 <= 10 && !Main.allyCellList.get(i*10+j+1).isHitCell() && (way == "" || way == "right")) {
-//          if(Main.allyField[i][j+1] == 1){
-//             way = "right";
-//          } else {
-//             way = "";
-//          }
-//          Main.allyField[i][j+1] -= 2;
-//          Main.allyCellList.get(i*10+j+1).update(Main.group, Main.allyCellList.get(i*10+j+1).getX(), Main.allyCellList.get(i*10+j+1).getY());
-//          Main.allyCellList.remove(i*10+j+1);
-//       } else {
-//          if(Main.allyField[i][j-1] == 1){
-//             way = "left";
-//          } else {
-//             way = "";
-//          }
-//          Main.allyField[i][j-1] -= 2;
-//          Main.allyCellList.get(i*10+j-1).update(Main.group, Main.allyCellList.get(i*10+j-1).getX(), Main.allyCellList.get(i*10+j-1).getY());
-//          Main.allyCellList.remove(i*10+j-1);
-//       }
-//    }
+    void hitField(int i, int j){
+        if (isRandom){
+            int index = (int)(Math.random() * n);
+            int x = Main.allyCellList.get(index).getX();
+            int y = Main.allyCellList.get(index).getY();
+            int indI = Main.allyCellList.get(index).getI();
+            int indJ = Main.allyCellList.get(index).getJ();
+            System.out.println("Hit " + indI + " " + indJ);
+            Main.allyCellList.get(index).setHitCell(true);
+            Main.allyField[Main.allyCellList.get(index).getI()][Main.allyCellList.get(index).getJ()] -= 3;
+            Main.allyCellList.get(index).update(Main.group, x, y, indI, indJ);
+            Main.allyCellList.remove(index);
+            n -= 1;
+        } else {
+            System.out.println("Not random " + i + " " + j);
+            damagedShip(i, j);
+        }
+    }
+
+    void damagedShip(int i, int j){
+       //вниз
+       if(i + 1 <= 10  && !Main.allyCellList.get((i+1)*10+j).isHitCell() && (way == "" || way == "down")){
+          Main.allyField[i+1][j] -= 3;
+          int index = (i-1)*10+j;
+          Main.allyCellList.get(index).update(Main.group, Main.allyCellList.get(index).getX(), Main.allyCellList.get(index).getY(), i+1, j);
+          Main.allyCellList.remove(index);
+           System.out.println(index);
+           if(Main.allyField[i+1][j] == 2){
+               way = "down";
+           } else if(Main.allyField[i-1][j] == 2){
+               way = "up";
+           } else if (Main.allyField[i][j+1] == 2){
+               way = "right";
+           } else if (Main.allyField[i][j-1] == 2){
+               way = "left";
+           } else {
+               isRandom = true;
+               way = "";
+           }
+       } else if (i - 1 >= 1 && !Main.allyCellList.get((i-1)*10+j).isHitCell() && (way == "" || way == "up")) {
+          Main.allyField[i-1][j] -= 3;
+          int index = (i-3)*10+j;
+          Main.allyCellList.get(index).update(Main.group, Main.allyCellList.get(index).getX(), Main.allyCellList.get(index).getY(), i-1, j);
+          Main.allyCellList.remove(index);
+           System.out.println(index);
+           if(Main.allyField[i-1][j] == 2){
+               way = "up";
+           } else if (Main.allyField[i+1][j] == 2){
+               way = "down";
+           } else if (Main.allyField[i][j+1] == 2){
+               way = "right";
+           } else if (Main.allyField[i][j-1] == 2){
+               way = "left";
+           } else {
+               isRandom = true;
+               way = "";
+           }
+       } else if (j + 1 <= 10 && !Main.allyCellList.get(i*10+j+1).isHitCell() && (way == "" || way == "right")) {
+          Main.allyField[i][j+1] -= 3;
+          int index = (i-1)*10+j+1;
+          Main.allyCellList.get(index).update(Main.group, Main.allyCellList.get(index).getX(), Main.allyCellList.get(index).getY(), i, j+1);
+          Main.allyCellList.remove(index);
+           System.out.println(index);
+           if(Main.allyField[i][j+1] == 2){
+               way = "right";
+           } if (Main.allyField[i+1][j] == 2){
+               way = "down";
+           } else if (Main.allyField[i-1][j] == 2){
+               way = "up";
+           } else if (Main.allyField[i][j-1] == 2){
+               way = "left";
+           } else {
+               isRandom = true;
+               way = "";
+           }
+       } else {
+          Main.allyField[i][j-1] -= 3;
+          int index = (i-1)*10+j-1;
+          Main.allyCellList.get(index).update(Main.group, Main.allyCellList.get(index).getX(), Main.allyCellList.get(index).getY(), i, j-1);
+          Main.allyCellList.remove(index);
+           System.out.println(index);
+           if(Main.allyField[i][j-1] == 2){
+               way = "left";
+           } else if(Main.allyField[i][j+1] == 2){
+               way = "right";
+           } else if (Main.allyField[i+1][j] == 2){
+               way = "down";
+           } else if (Main.allyField[i-1][j] == 2){
+               way = "up";
+           } else {
+               isRandom = true;
+               way = "";
+           }
+       }
+        System.out.println("damaged func: " + way + " " + i + " " + j + " " + isRandom);
+    }
 
     int[][] setField(){
 
