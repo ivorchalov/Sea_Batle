@@ -54,13 +54,13 @@ class Cell{
         this.hitCell = hitCell;
     }
 
-    public void update(Group group, int x, int y){
+    public void update(Group group, int x, int y, int indI, int indY){
         Enemy enemy = new Enemy();
         Rectangle rectangle = new Rectangle();
-        if (Main.allyField[i][j] == -1) {
+        if (Main.allyField[indI][indY] == -1) {
             rectangle.setFill(Color.RED);
             enemy.hitField();
-        } else if (Main.allyField[i][j] == 0) {
+        } else if (Main.allyField[indI][indY] == 2) {
             rectangle.setFill(Color.BLUE);
         } else {
             rectangle.setFill(Color.DARKGREY);
@@ -73,36 +73,30 @@ class Cell{
         group.getChildren().add(rectangle);
     }
 
-    public void drawCell(Group group, int x, int y, boolean ally){
+    public void drawCell(Group group, int x, int y){
         Rectangle rectangle = new Rectangle(x, y, 50, 50);
         rectangle.setFill(Color.WHITE);
         rectangle.setStroke(Color.BLACK);
         group.getChildren().add(rectangle);
-        mouseEvent(rectangle, ally);
+        mouseEvent(rectangle);
     }
 
-    private void mouseEvent(Rectangle rectangle, boolean ally){
-        if(ally){
-            rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
+    private void mouseEvent(Rectangle rectangle){
+        rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (hitCell) return;
+                Enemy enemy = new Enemy();
+                hitCell = true;
+                if (Main.enemyField[i][j] == 2) {
+                    rectangle.setFill(Color.RED);
+                    return;
+                } else {
+                    enemy.hitField();
+                    rectangle.setFill(Color.DARKGREY);
                 }
-            });
-        } else {
-            rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    Enemy enemy = new Enemy();
-                    if (Main.enemyField[i][j] == 1) {
-                        rectangle.setFill(Color.RED);
-                        return;
-                    } else {
-                        enemy.hitField();
-                        rectangle.setFill(Color.DARKGREY);
-                    }
-                }
-            });
-        }
+            }
+        });
     }
 }
 

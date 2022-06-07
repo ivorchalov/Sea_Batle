@@ -4,10 +4,8 @@ import javafx.scene.Scene;
 import javafx.scene.input.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Rotate;
 
 class Ship {
-
     private int health;
     private int count;
     static int countOfTypes = 0;
@@ -66,16 +64,14 @@ class Ship {
     public void rotate(Scene scene, Rectangle rectangle) {
         scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode() == KeyCode.SPACE) {
-                Rotate rotate = new Rotate();
                 if (vertical) {
-                    rotate.setAngle(-90);
+                    rectangle.setWidth(health * 50);
+                    rectangle.setHeight(50);
                 } else {
-                    rotate.setAngle(90);
+                    rectangle.setWidth(50);
+                    rectangle.setHeight(health * 50);
                 }
                 vertical = !vertical;
-                rotate.setPivotX(rectangle.getX() + 25);
-                rotate.setPivotX(rectangle.getY() + 25);
-                rectangle.getTransforms().add(rotate);
                 System.out.println(vertical);
             }
         });
@@ -93,14 +89,12 @@ class Ship {
             @Override
             public void handle(MouseEvent event) {
                 rotate(rectangle.getScene(), rectangle);
-                System.out.println("Xdet = " + event.getX() + " Ydet = " + event.getY());
             }
         });
 
         rectangle.setOnMouseReleased(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("over");
                 int x0_field = 100;
                 int y0_field = 50;
                 if (event.getX() <= x0_field + 50 * 10 && event.getY() <= y0_field + 50 * 10) {
@@ -108,13 +102,7 @@ class Ship {
                     int y0_cell = (int) (event.getY() - (event.getY() % 50));
                     int j = (x0_cell - x0_field) / 50 + 1;
                     int i = (y0_cell - y0_field) / 50 + 1;
-                    System.out.println("X = " + event.getX() + " Y = " + event.getY());
-                    System.out.println("x0_cell = " + x0_cell + " y0_cell = " + y0_cell);
-                    System.out.println("reli = " + i);
-                    System.out.println("relj = " + j);
-                    setShip(i, j);
-                    group.getChildren().remove(rectangle);
-                    vertical = false;
+                    setShip(i, j, rectangle);
                 }
             }
         });
@@ -127,23 +115,49 @@ class Ship {
         });
     }
 
-    public void setShip(int i, int j){
+
+    public void setShip(int i, int j, Rectangle rectangle){
 
         Cell cell = new Cell();
+        if(vertical){
+            for(int ind = i; ind < i+health; ind++){
+                if (ind >= 1 && ind <= 10 && Main.allyField[ind][j] >= 1) return;
+            }
+        } else {
+            for(int ind = j; ind < j+health; ind++){
+                if (ind >= 1 && ind <= 10 && Main.allyField[i][ind] >= 1) return;
+            }
+        }
+
 
         for (int index = 0; index < health; index++) {
             if (vertical) {
-                Main.allyField[i + index][j] = 1;
+                Main.allyField[i + index][j] = 2;
+                for(int ind1 = i-1; ind1 <= (i+health); ind1++){
+                    for(int ind2 = j-1; ind2 <= j+1; ind2++){
+                        if(ind1 >= 1 && ind1 <= 10 && ind2 >=1 && ind2 <= 10 && Main.allyField[ind1][ind2] != 2){
+                            Main.allyField[ind1][ind2] = 1;
+                        }
+                    }
+                }
                 int x = Main.allyCellList.get((i + index - 1) * 10 + j - 1).getX();
                 int y = Main.allyCellList.get((i + index - 1) * 10 + j - 1).getY();
-                cell.update(Main.group, x, y);
+                cell.update(Main.group, x, y, i, j);
             } else {
-                Main.allyField[i][j + index] = 1;
+                for(int ind1 = i-1; ind1 <= (i+1); ind1++){
+                    for(int ind2 = j-1; ind2 <= j+health; ind2++){
+                        if(ind1 >= 1 && ind1 <= 10 && ind2 >=1 && ind2 <= 10 && Main.allyField[ind1][ind2] != 2){
+                            Main.allyField[ind1][ind2] = 1;
+                        }
+                    }
+                }
+                Main.allyField[i][j + index] = 2;
                 int x = Main.allyCellList.get((i - 1) * 10 + j + index - 1).getX();
                 int y = Main.allyCellList.get((i - 1) * 10 + j + index - 1).getY();
-                cell.update(Main.group, x, y);
+                cell.update(Main.group, x, y, i, j);
             }
         }
+        Main.group.getChildren().remove(rectangle);
 
         for (int index1 = 1; index1 < Main.allyField.length - 1; index1++) {
             for (int index2 = 1; index2 < Main.allyField.length - 1; index2++) {

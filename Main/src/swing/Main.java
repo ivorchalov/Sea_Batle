@@ -43,7 +43,7 @@ public class Main extends Application {
         for(int i = 1; i < allyField.length - 1; i++){
             for(int j = 1; j < allyField.length - 1; j++){
                 Cell cell = new Cell();
-                cell.drawCell(group, x,y, true);
+                cell.drawCell(group, x,y);
                 cell.setI(i);
                 cell.setJ(j);
                 cell.setX(x);
@@ -62,7 +62,7 @@ public class Main extends Application {
         for(int i = 0; i < enemyField.length; i++){
             for(int j = 0; j < enemyField.length; j++){
                 Cell cell = new Cell();
-                cell.drawCell(group, x,y, false);
+                cell.drawCell(group, x,y);
                 cell.setI(i);
                 cell.setJ(j);
                 cell.setX(x);

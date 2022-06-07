@@ -6,9 +6,13 @@ public class Enemy {
 
     void hitField(){
         int index = (int)(Math.random() * n);
+        int x = Main.allyCellList.get(index).getX();
+        int y = Main.allyCellList.get(index).getY();
+        int i = Main.allyCellList.get(index).getI();
+        int j = Main.allyCellList.get(index).getJ();
         Main.allyCellList.get(index).setHitCell(true);
-        Main.allyField[Main.allyCellList.get(index).getI()][Main.allyCellList.get(index).getJ()] -= 2;
-        Main.allyCellList.get(index).update(Main.group, Main.allyCellList.get(index).getX(), Main.allyCellList.get(index).getY());
+        Main.allyField[Main.allyCellList.get(index).getI()][Main.allyCellList.get(index).getJ()] -= 3;
+        Main.allyCellList.get(index).update(Main.group, x, y, i, j);
         Main.allyCellList.remove(index);
         n -= 1;
     }
@@ -56,7 +60,7 @@ public class Enemy {
 
     int[][] setField(){
 
-        int index = (int)Math.random() * 10;
+        int index = (int)(Math.random() * 10);
 
         int[][] enemyField1 = {
                 {0,1,0,0,0,0,0,0,0,0},
