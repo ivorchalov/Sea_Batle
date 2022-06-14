@@ -8,7 +8,6 @@ import javafx.scene.shape.Rectangle;
 class Ship {
     private int health;
     private int count;
-    static int countOfTypes = 0;
     static int countOfShips = 10;
     boolean isSetOnField = false;
 
@@ -29,14 +28,6 @@ class Ship {
 
     public void setCount(int count) {
         this.count = count;
-    }
-
-    public int getCountOfTypes() {
-        return countOfTypes;
-    }
-
-    public void setCountOfTypes(int countOfTypes) {
-        Ship.countOfTypes = countOfTypes;
     }
 
     public void hitShip() {

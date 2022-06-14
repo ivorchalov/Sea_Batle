@@ -54,13 +54,13 @@ class Cell{
         this.hitCell = hitCell;
     }
 
-    public void update(Group group, int x, int y, int indI, int indY){
+    public void update(Group group, int x, int y, int indI, int indJ){
         Enemy enemy = new Enemy();
         Rectangle rectangle = new Rectangle();
-        if (Main.allyField[indI][indY] == -1) {
+        if (Main.allyField[indI][indJ] == -1) {
             rectangle.setFill(Color.RED);
             enemy.hitField();
-        } else if (Main.allyField[indI][indY] == 2) {
+        } else if (Main.allyField[indI][indJ] == 2) {
             rectangle.setFill(Color.BLUE);
         } else {
             rectangle.setFill(Color.DARKGREY);
