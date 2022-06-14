@@ -12,10 +12,13 @@ class Cell{
     private int x;
     private int y;
     private boolean hitCell = false;
+    private boolean ally;
+    Rectangle cell = new Rectangle();
 
-    public int getCurrentMatrixValue() {
-        return currentMatrixValue;
+    public void setAlly(boolean ally) {
+        this.ally = ally;
     }
+
     public void setCurrentMatrixValue(int currentMatrixValue) {
         this.currentMatrixValue = currentMatrixValue;
     }
@@ -56,44 +59,43 @@ class Cell{
 
     public void update(Group group, int x, int y, int indI, int indJ){
         Enemy enemy = new Enemy();
-        Rectangle rectangle = new Rectangle();
+
         if (Main.allyField[indI][indJ] == -1) {
-            rectangle.setFill(Color.RED);
+            cell.setFill(Color.RED);
             enemy.hitField();
         } else if (Main.allyField[indI][indJ] == 2) {
-            rectangle.setFill(Color.BLUE);
+            cell.setFill(Color.BLUE);
         } else {
-            rectangle.setFill(Color.DARKGREY);
+            cell.setFill(Color.DARKGREY);
         }
-        rectangle.setStroke(Color.BLACK);
-        rectangle.setX(x);
-        rectangle.setY(y);
-        rectangle.setWidth(50);
-        rectangle.setHeight(50);
-        group.getChildren().add(rectangle);
     }
 
     public void drawCell(Group group, int x, int y){
-        Rectangle rectangle = new Rectangle(x, y, 50, 50);
-        rectangle.setFill(Color.WHITE);
-        rectangle.setStroke(Color.BLACK);
-        group.getChildren().add(rectangle);
-        mouseEvent(rectangle);
+        cell.setFill(Color.WHITE);
+        cell.setStroke(Color.BLACK);
+        cell.setX(x);
+        cell.setY(y);
+        cell.setWidth(50);
+        cell.setHeight(50);
+        group.getChildren().add(cell);
+        mouseEvent(cell);
     }
 
     private void mouseEvent(Rectangle rectangle){
         rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if (hitCell) return;
-                Enemy enemy = new Enemy();
-                hitCell = true;
-                if (Main.enemyField[i][j] == 2) {
-                    rectangle.setFill(Color.RED);
-                    return;
-                } else {
-                    enemy.hitField();
-                    rectangle.setFill(Color.DARKGREY);
+                if (!ally){
+                    if (hitCell) return;
+                    Enemy enemy = new Enemy();
+                    hitCell = true;
+                    if (Main.enemyField[i][j] == 1) {
+                        rectangle.setFill(Color.RED);
+                        return;
+                    } else {
+                        enemy.hitField();
+                        rectangle.setFill(Color.DARKGREY);
+                    }
                 }
             }
         });

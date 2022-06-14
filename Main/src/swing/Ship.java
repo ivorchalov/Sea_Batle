@@ -109,7 +109,6 @@ class Ship {
 
     public void setShip(int i, int j, Rectangle rectangle){
 
-        Cell cell = new Cell();
         if(vertical){
             for(int ind = i; ind < i+health; ind++){
                 if (ind >= 1 && ind <= 10 && Main.allyField[ind][j] >= 1) return;
@@ -133,7 +132,7 @@ class Ship {
                 }
                 int x = Main.allyCellList.get((i + index - 1) * 10 + j - 1).getX();
                 int y = Main.allyCellList.get((i + index - 1) * 10 + j - 1).getY();
-                cell.update(Main.group, x, y, i, j);
+                Main.allyCellList.get((i+index-1)*10+j-1).update(Main.group, x, y, i + index, j);
             } else {
                 for(int ind1 = i-1; ind1 <= (i+1); ind1++){
                     for(int ind2 = j-1; ind2 <= j+health; ind2++){
@@ -145,7 +144,7 @@ class Ship {
                 Main.allyField[i][j + index] = 2;
                 int x = Main.allyCellList.get((i - 1) * 10 + j + index - 1).getX();
                 int y = Main.allyCellList.get((i - 1) * 10 + j + index - 1).getY();
-                cell.update(Main.group, x, y, i, j);
+                Main.allyCellList.get((i-1)*10+j-1+index).update(Main.group, x, y, i, j + index);
             }
         }
         Main.group.getChildren().remove(rectangle);

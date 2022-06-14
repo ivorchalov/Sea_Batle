@@ -14,6 +14,7 @@ public class Field {
         for(int i = 1; i < Main.allyField.length - 1; i++){
             for(int j = 1; j < Main.allyField.length - 1; j++){
                 Cell cell = new Cell();
+                cell.setAlly(true);
                 cell.drawCell(group, x,y);
                 cell.setI(i);
                 cell.setJ(j);
@@ -33,6 +34,7 @@ public class Field {
         for(int i = 0; i < Main.enemyField.length; i++){
             for(int j = 0; j < Main.enemyField.length; j++){
                 Cell cell = new Cell();
+                cell.setAlly(false);
                 cell.drawCell(group, x,y);
                 cell.setI(i);
                 cell.setJ(j);
