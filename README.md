@@ -10,33 +10,33 @@
 <img src="imgs/Screenshot_1.png" alt="подключение библиотеки JavaFX"/>
 <br/>
 <br/>
-1. В открывшемся окне перейдем к пункту Libraries:
-![Libraries](/imgs/Screenshot_2.png "Libraries")
+2. В открывшемся окне перейдем к пункту Libraries:
+<img src="imgs/Screenshot_2.png" alt="Libraries"/>
 <br/>
 <br/>
 3. В этой вкладке нажмем на знак + и в появившемся небольшом окошке выберем Java.
 <br/>
 Далее в открывшемся диалоговом окне выберем путь к каталоге lib в папке, где распакован JavaFX SDK. И нажмем на OK для подключения библиотек.
 <br/>
-![подключение JavaFX SDK](/imgs/Screenshot_3.png "подключение JavaFX SDK")
+<img src="imgs/Screenshot_3.png" alt="подключение JavaFX SDK"/>
 <br/>
 <br/>
 4. И далее нажмем на кнопку Apply для применения изменений и затем на кнопку OK.
 <br/>
-![Apply](/imgs/Screenshot_4.png "Apply")
+<img src="imgs/Screenshot_4.png" alt="Apply"/>
 <br/>
 <br/>
 5. Далее перейдем в меню Run -> Edit Configuration
 <br/>
-![Config](/imgs/Screenshot_5.png "Config")
+<img src="imgs/Screenshot_5.png" alt="Config"/>
 <br/>
 <br/>
 6. И в открывшемся окне перейдем к полю VM options. Если это поле отстутствует, то нажмем на опцию Modify options и в контекстном меню выберем Add VM options
 <br/>
-![Add VM options](/imgs/Screenshot_6.png "Add VM options")
+<img src="imgs/Screenshot_6.png" alt="Add VM options"/>
 <br/>
 <br/>
 `--module-path "путь к JavFX SDK\lib" --add-modules javafx.controls,javafx.fxml`
 <br/>
 <br/>
-![Add VM options](/imgs/Screenshot_7.png "Add VM options")
+<img src="imgs/Screenshot_7.png" alt="Add VM options"/>
