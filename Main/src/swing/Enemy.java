@@ -1,4 +1,3 @@
-
 public class Enemy {
     static int n = 100;
 
@@ -10,11 +9,12 @@ public class Enemy {
             int i = Main.allyCellList.get(index).getI();
             int j = Main.allyCellList.get(index).getJ();
             Main.allyCellList.get(index).setHitCell(true);
-            Main.allyField[Main.allyCellList.get(index).getI()][Main.allyCellList.get(index).getJ()] -= 3;
-            Main.allyCellList.get(index).update(Main.group, x, y, i, j);
+            Main.allyField[i][j] -= 3;
+            Main.allyCellList.get(index).update(i, j);
         } else {
             hitField();
         }
     }
 }
+
 

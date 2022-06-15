@@ -20,7 +20,6 @@ public class Field {
                 cell.setJ(j);
                 cell.setX(x);
                 cell.setY(y);
-                cell.setCurrentMatrixValue(Main.allyField[i][j]);
                 Main.allyCellList.add(cell);
                 x += 50;
             }
@@ -40,7 +39,6 @@ public class Field {
                 cell.setJ(j);
                 cell.setX(x);
                 cell.setY(y);
-                cell.setCurrentMatrixValue(Main.enemyField[i][j]);
                 Main.enemyCellList.add(cell);
                 x += 50;
             }
@@ -239,3 +237,4 @@ public class Field {
         return buffField;
     }
 }
+
