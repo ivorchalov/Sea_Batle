@@ -1,3 +1,4 @@
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
@@ -6,21 +7,17 @@ import javafx.scene.shape.Rectangle;
 
 class Cell{
 
-    private int currentMatrixValue;
     private int i;
     private int j;
     private int x;
     private int y;
     private boolean hitCell = false;
-    private boolean ally;
+    private boolean ally = true;
+
     Rectangle cell = new Rectangle();
 
     public void setAlly(boolean ally) {
         this.ally = ally;
-    }
-
-    public void setCurrentMatrixValue(int currentMatrixValue) {
-        this.currentMatrixValue = currentMatrixValue;
     }
 
     public int getI(){
@@ -57,14 +54,19 @@ class Cell{
         this.hitCell = hitCell;
     }
 
-    public void update(Group group, int x, int y, int indI, int indJ){
+    public void update(int i, int j){
         Enemy enemy = new Enemy();
-
-        if (Main.allyField[indI][indJ] == -1) {
+        if (Main.allyField[i][j] == -1) {
             cell.setFill(Color.RED);
+            Ship.allyShipsHealth--;
+            if(Ship.allyShipsHealth == 0){
+                Main main = new Main();
+                main.showWhoIsWin();
+                Platform.exit();
+            }
             enemy.hitField();
-        } else if (Main.allyField[indI][indJ] == 2) {
-            cell.setFill(Color.BLUE);
+        } else if (Main.allyField[i][j] == 2) {
+            cell.setFill(Color.CYAN);
         } else {
             cell.setFill(Color.DARKGREY);
         }
@@ -81,24 +83,33 @@ class Cell{
         mouseEvent(cell);
     }
 
-    private void mouseEvent(Rectangle rectangle){
-        rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+    private void mouseEvent(Rectangle cell){
+        cell.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if (!ally){
+                if (!ally && Ship.countOfShips == 0){
                     if (hitCell) return;
                     Enemy enemy = new Enemy();
                     hitCell = true;
+                    Main.countOfSteps++;
                     if (Main.enemyField[i][j] == 1) {
-                        rectangle.setFill(Color.RED);
+                        cell.setFill(Color.RED);
+                        Ship.enemyShipsHealth--;
+                        if(Ship.enemyShipsHealth == 0){
+                            Main main = new Main();
+                            main.showWhoIsWin();
+                            Platform.exit();
+                        }
                         return;
                     } else {
                         enemy.hitField();
-                        rectangle.setFill(Color.DARKGREY);
+                        cell.setFill(Color.DARKGREY);
                     }
                 }
             }
         });
     }
 }
+
+
 
